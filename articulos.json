@@ -4,19 +4,19 @@
       "id": "m2",
       "nombre": "Oppo A94",
       "descripcion": "8GB + 128GB libre",
-      "precio": "271"
+      "precio": "269"
     },
     {
       "id": "m3",
       "nombre": "Galaxy S22",
       "descripcion": "5G Amoled libre",
-      "precio": 859
+      "precio": "860"
     },
     {
       "id": "m4",
       "nombre": "Apple iPhone",
       "descripcion": "14 Pro móvil libre",
-      "precio": 339
+      "precio": "340"
     },
     {
       "id": "m5",
@@ -70,19 +70,13 @@
       "id": "t3",
       "nombre": "Samsung UE305",
       "descripcion": "Full HD, HDR",
-      "precio": 350
+      "precio": "351"
     },
     {
+      "id": "38yKAny",
       "nombre": "lo mas",
       "descripcion": "flipas con lo que tiene",
-      "precio": "9999999",
-      "id": "38yKAny"
-    },
-    {
-      "id": "eQDrPID",
-      "nombre": "qwe123123",
-      "descripcion": "qwe",
-      "precio": "222"
+      "precio": "9999999"
     }
   ]
 }
