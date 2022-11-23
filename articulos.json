@@ -1,22 +1,10 @@
 {
   "articulos": [
     {
-      "id": "m2",
-      "nombre": "Oppo A94",
-      "descripcion": "8GB + 128GB libre",
-      "precio": "269"
-    },
-    {
-      "id": "m3",
-      "nombre": "Galaxy S22",
-      "descripcion": "5G Amoled libre",
-      "precio": "860"
-    },
-    {
       "id": "m4",
       "nombre": "Apple iPhone",
       "descripcion": "14 Pro móvil libre",
-      "precio": "340"
+      "precio": "338"
     },
     {
       "id": "m5",
@@ -46,7 +34,7 @@
       "id": "p2",
       "nombre": "HP Pavillion",
       "descripcion": "SSD Windows 11",
-      "precio": 750
+      "precio": "751"
     },
     {
       "id": "p3",

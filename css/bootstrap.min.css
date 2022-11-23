@@ -40,9 +40,20 @@
 ::before {
     box-sizing: border-box
 }
-.imagen{
+
+.pruebas {
+    display: flex;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+
+
+}
+
+.imagen {
     width: 50px;
 }
+
 html {
     font-family: sans-serif;
     line-height: 1.15;
@@ -5296,8 +5307,8 @@ input[type=submit].btn-block {
     margin-right: 0;
     margin-left: 0
 }
-card-im
-.card>.list-group {
+
+card-im .card>.list-group {
     border-top: inherit;
     border-bottom: inherit
 }

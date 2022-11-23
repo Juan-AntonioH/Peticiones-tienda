@@ -1,19 +1,23 @@
 
 let json;
-let xhr = new XMLHttpRequest();
 let artSinModificar = [];
 //PETICIONES XHR
 function solicitarDatos(metodo = 'GET', id = "", body = "") {
-	xhr.open(metodo, 'http://localhost:3000/articulos/' + id);
-	xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-	xhr.responseType = 'json';
-	xhr.send(body);
-	xhr.onload = function () {
-		json = xhr.response;
-	}
-	return xhr;
+	return new Promise(function (resolve, reject) {
+		let xhr = new XMLHttpRequest();
+		xhr.open(metodo, 'http://localhost:3000/articulos/' + id);
+		metodo == "PUT" || "POST" ? xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8') : "";
+		xhr.responseType = 'json';
+		xhr.send(body);
+		xhr.onload = function () {
+			xhr.status >= 200 && xhr.status <= 205 ? 
+			setTimeout(() => resolve(xhr.response), 4000):
+							 reject(alert("Error al acceder a la base de datos"));
+		}
+	})
 }
 /////////////////////////
+
 //DIALOGO PREDETERMINADO//
 function dialogos() {
 	return `</div>
@@ -45,14 +49,17 @@ function dialogos() {
 		</div>`;
 }
 /////////////////////////
+
 //PINTAR TODO////
 function crearTablaArticulos() {
-	let articulo;
-	xhr = solicitarDatos();
-	xhr.onloadend = function () {
+	document.getElementById("contenedor").innerHTML = '<img src="assets/image.gif" class="pruebas">';
+	solicitarDatos().then(result => {
+		// json = result;
+		let articulo;
+		
 		let tablaArticulos = "<table class='table table-striped '><tr><th><th>nombre<th>descripcion<th>precio<th></tr>"
-		let lista = [...json];
-		lista.forEach(e => {
+		// let lista = [...json];
+		result.forEach(e => {
 			tablaArticulos += `
 			<tr>
 			<td><img src="assets/${e.id}.jpg" class="imagen">
@@ -65,7 +72,7 @@ function crearTablaArticulos() {
 		})
 		tablaArticulos += "</table>"
 		document.getElementById("contenedor").innerHTML = tablaArticulos;
-		lista.forEach(e => {
+		result.forEach(e => {
 			articulo = artSinModificar.find(a => a.id == e.id);
 			if (articulo != undefined) {
 				let boton = document.createElement("button");
@@ -78,32 +85,34 @@ function crearTablaArticulos() {
 			document.getElementById(e.id + "_modi").onclick = () => { modificaArticulo(e) }
 			document.getElementById(e.id + "_borrar").onclick = () => { borraArticulo(e.id) }
 		})
-	}
+	}).catch(result => result);
+
 }
 ///////////////////////////
+
 //RESTAURAR ARTICULO A COMO ESTABA ANTES////
-function restaurarArticulo(id){
+function restaurarArticulo(id) {
 	var opcion = confirm("¿Estás seguro de restaurar los valores?");
-	if(opcion){
-		let pos = artSinModificar.findIndex(e=> e.id==id);
+	if (opcion) {
+		let pos = artSinModificar.findIndex(e => e.id == id);
 		let objeto = JSON.stringify(artSinModificar[pos])
-		xhr = solicitarDatos('PUT', id, objeto);
-		artSinModificar.splice(pos,1);
-		xhr.onloadend = function () {
+		solicitarDatos('PUT', id, objeto).then(() => {
 			document.getElementById("miDialogo").close();
+			artSinModificar.splice(pos, 1);
 			crearTablaArticulos();
-		}
+		}).catch(result => result);
 	}
 }
 ///////////////////////////////////////
+
 //BORRAR ARTICULO//////
 function borraArticulo(id) {
-	xhr = solicitarDatos('DELETE', id);
-	xhr.onloadend = function () {
+	solicitarDatos('DELETE', id).then(() => {
 		crearTablaArticulos();
-	}
+	}).catch(result => result);
 }
 /////////////////////////
+
 ///MODIFICAR ARTICULO////
 function modificaArticulo(articulo) {
 	let dialogo = document.getElementById("miDialogo");
@@ -128,13 +137,13 @@ function cambiar(articulo) {
 	let pos = artSinModificar.findIndex(e => e.id == articulo.id);
 	pos == -1 ? artSinModificar.push(articulo) : artSinModificar[pos] = articulo;
 	let objeto = JSON.stringify(newArticulos)
-	xhr = solicitarDatos('PUT', articulo.id, objeto);
-	xhr.onloadend = function () {
+	solicitarDatos('PUT', articulo.id, objeto).then(() => {
 		document.getElementById("miDialogo").close();
 		crearTablaArticulos();
-	}
+	}).catch(result => result);
 }
 /////////////////////
+
 //NUEVO ARTICULO//
 function nuevo() {
 	let dialogo = document.getElementById("miDialogo");
@@ -154,11 +163,11 @@ function enviar() {
 		newArticulos[par[0]] = par[1]
 	}
 	let objeto = JSON.stringify(newArticulos)
-	xhr = solicitarDatos('POST',"", objeto);
-	xhr.onloadend = function () {
+
+	solicitarDatos('POST', "", objeto).then(() => {
 		document.getElementById("miDialogo").close();
 		crearTablaArticulos();
-	}
+	}).catch(result => result);
 }
 ///////////////
 window.onload = () => {
